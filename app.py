@@ -1,4 +1,4 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, request, jsonify
 import os
 import praw
 
@@ -18,9 +18,15 @@ def home():
 
 @app.route('/trigger_action', methods=['POST'])
 def trigger_action():
-    # Perform any Python operations here
-    # Example: print a message to the console
-    reddit.subreddit("bearbrest").submit("Perfect", url="https://img2.hotnessrater.com/2724449/mia-khalifa-porn.jpg?w=4000&h=6000")
+    data = request.get_json()
+    input_text1 = data.get('input_text1', '')
+    input_text2 = data.get('input_text2', '')
+    # Perform any Python operations with the input_text1 and input_text2 here
+    print(f"Received input text1: {input_text1}")
+    print(f"Received input text2: {input_text2}")
+    reddit.subreddit("bearbrest").submit(title=input_text1, url=input_text2)
+
+    return jsonify({'status': 'Action triggered successfully!', 'input_text1': input_text1, 'input_text2': input_text2})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

@@ -6,20 +6,28 @@
     <title>Flask App</title>
     <script>
         function triggerAction() {
+            const inputText1 = document.getElementById('inputField1').value;
+            const inputText2 = document.getElementById('inputField2').value;
             fetch('/trigger_action', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
-                }
+                },
+                body: JSON.stringify({ input_text1: inputText1, input_text2: inputText2 })
             })
             .then(response => response.json())
             .then(data => {
                 console.log(data.status);
+                console.log(`Input text1 from server: ${data.input_text1}`);
+                console.log(`Input text2 from server: ${data.input_text2}`);
             });
         }
     </script>
 </head>
 <body>
-    <button onclick="triggerAction()">Click me to trigger action</button>
+    <h1>Welcome, bearbrest.</h1>
+    <input type="text" id="inputField1" placeholder="Title">
+    <input type="text" id="inputField2" placeholder="Content">
+    <button onclick="triggerAction()">Submit</button>
 </body>
 </html>
