@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask App</title>
+    <title>bearbrest</title>
+    <link rel="icon" type="image/x-icon" href="https://pbs.twimg.com/profile_images/1807459953114013696/kygBDUif_400x400.jpg">
     <script>
         function triggerAction() {
             const inputText1 = document.getElementById('inputField1').value;
@@ -17,9 +18,19 @@
             })
             .then(response => response.json())
             .then(data => {
+                alert('Post submitted successfully!');
                 console.log(data.status);
                 console.log(`Input text1 from server: ${data.input_text1}`);
                 console.log(`Input text2 from server: ${data.input_text2}`);
+                // Display the image on the webpage
+                const image = document.createElement('img');
+                image.src = data.input_text2;
+                image.alt = data.input_text1;
+                image.style.maxWidth = '100%';
+                image.style.marginTop = '10px';
+                const imageContainer = document.getElementById('imageContainer');
+                imageContainer.innerHTML = ''; // Clear previous image if any
+                imageContainer.appendChild(image);
             });
         }
     </script>
@@ -29,5 +40,6 @@
     <input type="text" id="inputField1" placeholder="Title">
     <input type="text" id="inputField2" placeholder="Content">
     <button onclick="triggerAction()">Submit</button>
+    <div id="imageContainer"></div>
 </body>
 </html>
